@@ -3,6 +3,7 @@ $(document).ready(function () {
     let dt = $('#employee_table').DataTable({
         processing: true,
         serverSide: true,
+        destroy: true,
         lengthChange: false,
         ajax: {
             method: "POST",
@@ -15,7 +16,6 @@ $(document).ready(function () {
             { data: 'name', name: 'name' },
             { data: 'whatsapp', name: 'whatsapp' },
             { data: '_color', name: '_color' },
-            // { data: 'action', name: 'action', orderable: false, searchable: false },
         ],
         dom: "<'row'<'col-sm-12 col-md-6' <'trash-view'>><'col-sm-12 col-md-6'f>>" +
             "<'row'<'col-sm-12'tr>>" +
@@ -25,6 +25,14 @@ $(document).ready(function () {
         }
     });
 
+    const resetForm = () => {
+        $('#form-employee').trigger('reset');
+        $('#form-employee input').prop('readonly', false);
+        colors();
+        $('#color').removeAttr('style');
+        $('#submit').text('Save');
+        module.isHidden('#delete', true);
+    }
     
     const colors = () => {
         return new Promise((resolve, reject) => {
@@ -62,13 +70,72 @@ $(document).ready(function () {
         });
     });
 
+    $(document).on('click', '#trash-table', function () {
+        resetForm();
+        dt = $('#employee_table').DataTable({
+            processing: true,
+            serverSide: true,
+            destroy: true,
+            lengthChange: false,
+            ajax: {
+                method: "POST",
+                url: module.base_url + 'employee/datatable',
+                headers: {'X-CSRF-TOKEN': module.header_token},
+                data: {
+                    trash: true
+                }
+            },
+            columns: [
+                { data: 'DT_RowIndex', name: 'DT_RowIndex' },
+                { data: 'nik', name: 'nik' },
+                { data: 'name', name: 'name' },
+                { data: 'whatsapp', name: 'whatsapp' },
+                { data: '_color', name: '_color' },
+            ],
+            dom: "<'row'<'col-sm-12 col-md-6' <'active-view'>><'col-sm-12 col-md-6'f>>" +
+                "<'row'<'col-sm-12'tr>>" +
+                "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
+            initComplete: function() {
+                $("div.active-view").html('<button type="button" id="active-table" class="btn btn-success btn-sm"><i class="fa fa-check"></i> Active Table</button>');
+            }
+        });
+    });
+
+    $(document).on('click', '#active-table', function () {
+        resetForm();
+        dt = $('#employee_table').DataTable({
+            processing: true,
+            serverSide: true,
+            destroy: true,
+            lengthChange: false,
+            ajax: {
+                method: "POST",
+                url: module.base_url + 'employee/datatable',
+                headers: {'X-CSRF-TOKEN': module.header_token},
+            },
+            columns: [
+                { data: 'DT_RowIndex', name: 'DT_RowIndex' },
+                { data: 'nik', name: 'nik' },
+                { data: 'name', name: 'name' },
+                { data: 'whatsapp', name: 'whatsapp' },
+                { data: '_color', name: '_color' },
+            ],
+            dom: "<'row'<'col-sm-12 col-md-6' <'trash-view'>><'col-sm-12 col-md-6'f>>" +
+                "<'row'<'col-sm-12'tr>>" +
+                "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
+            initComplete: function() {
+                $("div.trash-view").html('<button type="button" id="trash-table" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> Trash Table</button>');
+            }
+        });
+    });
+
     let touchtime = 0;
     $('#employee_table tbody').on('click', 'tr', function () {
         if (touchtime == 0) {
             touchtime = new Date().getTime();
         } else {
             if (((new Date().getTime()) - touchtime) < 800) {
-                var data = dt.row( this ).data();
+                let data = dt.row( this ).data();
                 if (data != undefined) {
                     $('#color').append($('<option>', { 
                         value: data.color,
@@ -81,10 +148,19 @@ $(document).ready(function () {
                     $('#name').val(data.name);
                     $('#whatsapp').val(data.whatsapp);
                     $('#color').val(data.color);
+                    
+                    let active = 0;
+                    if (data.deleted_at == null) {
+                        active = 1;
+                    }else{
+                        active = 0;
+                        module.isHidden('#delete', false);
+                    }
+                    console.log(data.deleted_at);
+                    $('#status').val(active);
 
                     $("#color").css({background: data.color, color: 'white'});
                     $('#submit').text('Update');
-                    module.isHidden('#delete', false);
                 }
                 touchtime = 0;
             } else {
@@ -92,15 +168,6 @@ $(document).ready(function () {
             }
         }
     });
-
-    const resetForm = () => {
-        $('#form-employee').trigger('reset');
-        $('#form-employee input').prop('readonly', false);
-        colors();
-        $('#color').removeAttr('style');
-        $('#submit').text('Save');
-        module.isHidden('#delete', true);
-    }
 
     $('#cancel').click(function() {
         resetForm()
@@ -116,7 +183,8 @@ $(document).ready(function () {
                 nik: $('#nik').val(),
                 name: $('#name').val(),
                 whatsapp: $('#whatsapp').val(),
-                color: $('#color').val()
+                color: $('#color').val(),
+                active: $('#status').val(),
             }
 
         module.callAjax(url, method).then(response => {
@@ -147,22 +215,32 @@ $(document).ready(function () {
                 message: 'Data not found!'
             });
         }else{
-            module.loading_start();
-            let url = module.base_url + 'employee/' + $('#nik').val() + '/delete',
-                method = "DELETE"
-            module.callAjax(url, method).then(response => {
-                module.loading_stop();
-                resetForm();
-                dt.ajax.reload();
-                module.send_notif({
-                    icon: 'success',
-                    message: response.message
-                });
-            });
+            swal({
+                title: 'Are you sure?',
+                text: "This employee will be deleted permanently!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonClass: 'btn btn-danger mt-2',
+                cancelButtonClass: 'btn btn-scondary ml-2 mt-2',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((answers) => {
+                if (answers == true) {
+                    module.loading_start();
+                    let url = module.base_url + 'employee/' + $('#nik').val() + '/delete',
+                        method = "DELETE"
+                    module.callAjax(url, method).then(response => {
+                        module.loading_stop();
+                        resetForm();
+                        dt.ajax.reload();
+                        module.send_notif({
+                            icon: 'success',
+                            message: response.message
+                        });
+                    });
+                }
+                console.clear();
+            })
         }
     });
 
-    $(document).click('#trash-table', function () {
-        
-    });
 });

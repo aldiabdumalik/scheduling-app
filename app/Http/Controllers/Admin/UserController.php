@@ -18,9 +18,16 @@ class UserController extends Controller
 
     public function dtEmployee(Request $request)
     {
-        $query = Employee::query()
-            ->whereNull('deleted_at')
-            ->get();
+        $query = null;
+        if ($request->trash) {
+            $query = Employee::query()
+                ->whereNotNull('deleted_at')
+                ->get();
+        }else{
+            $query = Employee::query()
+                ->whereNull('deleted_at')
+                ->get();
+        }
         return DataTables::of($query)
             ->addColumn('_color', function($query){
                 return view('pages.admin.employee.components.color', ['color' => $query->color]);
@@ -64,6 +71,7 @@ class UserController extends Controller
             'name' => $request->name,
             'whatsapp' => $whatsapp,
             'color' => $request->color,
+            'deleted_at' => ($request->active == 1) ? null : Carbon::now()
         ]);
 
         return thisSuccess('Data saved successfully!');
@@ -90,19 +98,19 @@ class UserController extends Controller
         $employee->name = $request->name;
         $employee->whatsapp = $whatsapp;
         $employee->color = $request->color;
+        $employee->deleted_at = ($request->active == 1) ? null : Carbon::now();
 
         $employee->save();
 
         return thisSuccess('Data updated successfully!');
     }
 
-    public function delete($nik)
+    public function destroy($nik)
     {
         $employee = Employee::where('nik', $nik)->first();
 
         $employee = Employee::find($employee->id);
-        $employee->deleted_at = Carbon::now();
-        $employee->save();
+        $employee->delete();
 
         return thisSuccess('Data deleted successfully!');
     }
