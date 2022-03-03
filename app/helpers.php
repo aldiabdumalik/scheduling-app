@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Config;
+
 if (!function_exists('thisSuccess')) {
     function thisSuccess($msg, $content=null, $code=200) {
         return response()->json([
@@ -34,5 +36,12 @@ if (!function_exists('waFormater')) {
         }
 
         return $hp;
+    }
+}
+
+if (!function_exists('urlApiCalender')) {
+    function urlApiCalender($params=null)
+    {
+        return Config::get('app.api_kalender') . $params;
     }
 }

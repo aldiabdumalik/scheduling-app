@@ -121,6 +121,8 @@ return [
 
     'key' => env('APP_KEY'),
 
+    'api_kalender' => env('API_CALENDAR'),
+
     'cipher' => 'AES-256-CBC',
 
     /*
