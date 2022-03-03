@@ -16,7 +16,8 @@ class CreatePicketsTable extends Migration
         Schema::create('pickets', function (Blueprint $table) {
             $table->id();
             $table->foreignId('employee_id')
-                ->constrained();
+                ->constrained()
+                ->onDelete();
             $table->date('picket_at');
             $table->timestamps();
         });

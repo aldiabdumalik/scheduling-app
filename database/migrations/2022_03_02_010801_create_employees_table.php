@@ -17,8 +17,7 @@ class CreateEmployeesTable extends Migration
             $table->id();
             $table->foreignId('user_id')
                 ->nullable()
-                ->constrained()
-                ->onDelete('cascade');
+                ->constrained();
             $table->string('name', 50);
             $table->integer('nik')->unsigned()->unique()->index();
             $table->bigInteger('whatsapp')->unsigned()->unique();
