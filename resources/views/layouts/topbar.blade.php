@@ -14,12 +14,12 @@
             <li class="dropdown notification-list">
                 <a class="nav-link dropdown-toggle nav-user" data-toggle="dropdown" href="#" role="button"
                    aria-haspopup="false" aria-expanded="false">
-                    <img src="{{asset('assets/uploads/user_photos/')}}/{{auth()->user()->photo}}" alt="{{auth()->user()->name}}" class="rounded-circle"> <span class="ml-1">{{explode(" ",auth()->user()->name)[0]}} {{explode(" ",auth()->user()->name)[1]}}<i class="mdi mdi-chevron-down"></i> </span>
+                    <img src="{{asset('files/avatar/default.jpg')}}" alt="p" class="rounded-circle"> <span class="ml-1">{{auth()->user()->load('employee')->employee->name}}<i class="mdi mdi-chevron-down"></i> </span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated profile-dropdown">
                     <!-- item-->
                     <div class="dropdown-item noti-title">
-                        <h6 class="text-overflow m-0">Hi {{explode(" ",auth()->user()->name)[0]}} {{explode(" ",auth()->user()->name)[1]}}</h6>
+                        <h6 class="text-overflow m-0">Hi {{auth()->user()->load('employee')->employee->name}}</h6>
                     </div>
 
                     <!-- item-->
@@ -48,9 +48,9 @@
                     <h4 class="page-title">@yield('title')</h4>
                     <ol class="breadcrumb">
                         {{-- {{print_r($breadcrumb)}} --}}
-                        @foreach ($breadcrumb as $ol)
+                        {{-- @foreach ($breadcrumb as $ol)
                         <li class="breadcrumb-item"><a href="{{route($ol['menu']['url'])}}">{{$ol['menu']['nama']}}</a></li>
-                        @endforeach
+                        @endforeach --}}
                     </ol>
                 </div>
             </li>

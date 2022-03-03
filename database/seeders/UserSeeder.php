@@ -16,7 +16,7 @@ class UserSeeder extends Seeder
     public function run()
     {
         $user = User::create([
-            'password' => bcrypt('12345')
+            'password' => bcrypt('5258')
         ]);
 
         Employee::create([

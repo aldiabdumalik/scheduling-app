@@ -10,7 +10,7 @@
             </div>
         </div>
         <footer class="footer">
-            2020 &copy; updu.tech
+            2022 &copy; updu.tech
         </footer>
     </div>
 </div>

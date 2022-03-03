@@ -39,6 +39,10 @@ export function loading_stop() {
     $('body').loading('stop');
 }
 
+export function isHidden(element, value=true) {
+    return (value == true) ? $(element).addClass('d-none') : $(element).removeClass('d-none')
+}
+
 export function callAjax(url, method, data=null) {
     return new Promise((resolve, reject) => {
         $.ajax({

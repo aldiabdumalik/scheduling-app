@@ -20,7 +20,7 @@ class CreateEmployeesTable extends Migration
                 ->constrained()
                 ->onDelete('cascade');
             $table->string('name', 50);
-            $table->integer('nik')->unsigned()->unique();
+            $table->integer('nik')->unsigned()->unique()->index();
             $table->bigInteger('whatsapp')->unsigned()->unique();
             $table->string('avatar', 50)
                 ->default('default.jpg');

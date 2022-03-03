@@ -14,14 +14,14 @@
         <!-- User box -->
         <div class="user-box">
             <div class="user-img">
-                <img src="{{asset('assets/uploads/user_photos/')}}/{{auth()->user()->photo}}" alt="user-img" title="{{auth()->user()->name}}" class="rounded-circle img-fluid">
+                <img src="{{asset('files/avatar/default.jpg')}}" alt="user-img" title="p" class="rounded-circle img-fluid">
             </div>
             <h5>
                 <a href="#">
-                    {{explode(" ",auth()->user()->name)[0]}} {{explode(" ",auth()->user()->name)[1]}}
+                    {{auth()->user()->load('employee')->employee->name}}
                 </a>
             </h5>
-            <p class="text-muted">{{auth()->user()->level}}</p>
+            <p class="text-muted"></p>
         </div>
         <!--- Sidemenu -->
         <div id="sidebar-menu">
@@ -29,16 +29,31 @@
             <ul class="metismenu" id="side-menu">
 
                 <li>
-                    <a href="{{route('dashboard')}}">
+                    <a href="{{route('admin.dashboard')}}">
                         <i class="fi-air-play"></i> <span> Dashboard </span>
                     </a>
                 </li>
 
                 <li>
-                    <a href="javascript: void(0);"><i class="fi-folder"></i> <span> Master </span> <span class="menu-arrow"></span></a>
+                    <a href="javascript: void(0);"><i class="fi-folder"></i> <span> Schedule </span> <span class="menu-arrow"></span></a>
                     <ul class="nav-second-level" aria-expanded="false">
-                        <li><a href="{{route('users')}}">Users</a></li>
+                        <li><a href="{{route('admin.schedule')}}">Event</a></li>
+                        <li><a href="{{route('admin.schedule')}}">Picket</a></li>
                     </ul>
+                </li>
+
+                <li>
+                    <a href="javascript: void(0);"><i class="fi-head"></i> <span> User </span> <span class="menu-arrow"></span></a>
+                    <ul class="nav-second-level" aria-expanded="false">
+                        <li><a href="{{route('admin.employee')}}">Employee</a></li>
+                        <li><a href="{{route('admin.user')}}">User</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="{{route('logout')}}">
+                        <i class="fi-cog"></i> <span> Quote </span>
+                    </a>
                 </li>
 
             </ul>
