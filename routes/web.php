@@ -41,9 +41,9 @@ Route::controller(UserController::class)->group(function () {
     Route::get('employee/get_colors', 'empColors')->name('admin.employee.color');
     Route::delete('employee/{nik}/delete', 'destroy')->name('admin.employee.destroy');
 
-    Route::get('user', 'index')->name('admin.user');
-    // Route::post('user/save', 'userStore')->name('admin.user.store');
-    // Route::put('user/{nik}/reset_password', 'userPassword')->name('admin.user.password');
+    Route::get('user', 'indexUser')->name('admin.user');
+    Route::post('user/datatable', 'dtUser')->name('admin.user.dt');
+    Route::put('user/{nik}/reset_password', 'userPassword')->name('admin.user.password');
 });
 
 Route::controller(ScheduleController::class)->group(function () {

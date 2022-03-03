@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Color;
 use App\Models\Employee;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
@@ -121,5 +122,47 @@ class UserController extends Controller
             ->whereNull('employees.color')
             ->get();
         return thisSuccess(null, $res);
+    }
+
+    public function indexUser()
+    {
+        return view('pages.admin.user.index');
+    }
+
+    public function dtUser(Request $request)
+    {
+        $query = Employee::query()->with('user')->whereNull('deleted_at')->get();
+
+        return DataTables::of($query)
+            ->addColumn('_password', function($query){
+                return (is_null($query->user_id)) ? 'Password Not Set' : '*****';
+            })
+            ->addIndexColumn()
+            ->make(true);
+    }
+
+    public function userPassword($nik, Request $request)
+    {
+        $employee = Employee::where('nik', $nik)->first();
+        if (!$employee) {
+            return thisError('Please create Employee First', 'employee');
+        }
+
+        if (!$employee->user_id) {
+            $user = User::create([
+                'password' => bcrypt($request->password)
+            ]);
+
+            $employee = Employee::find($employee->id);
+            $employee->user_id = $user->id;
+            $employee->save();
+
+            return thisSuccess('User registered successfully!');
+        }
+
+        $user = User::find($employee->user_id);
+        $user->password = bcrypt($request->password);
+
+        return thisSuccess('Data updated successfully!');
     }
 }

@@ -1,73 +1,76 @@
 import * as module from './module.js';
 $(document).ready(function () {
-    $('.dropify').dropify();
-    var table = $('#users_table').DataTable({
+    const dt = $('#user_table').DataTable({
         processing: true,
         serverSide: true,
-        ajax: `${module.baseurl()}/users/users-table`,
+        destroy: true,
+        lengthChange: false,
+        ajax: {
+            method: "POST",
+            url: module.base_url + 'user/datatable',
+            headers: {'X-CSRF-TOKEN': module.header_token},
+        },
         columns: [
-            { data: 'id', name: 'id' },
+            { data: 'DT_RowIndex', name: 'DT_RowIndex' },
+            { data: 'nik', name: 'nik' },
             { data: 'name', name: 'name' },
-            { data: 'email', name: 'email' },
-            { data: 'action', name: 'action', orderable: false, searchable: false },
-        ]
+            { data: '_password', name: '_password', className: 'text-center font-italic'}
+        ],
     });
 
-    $('#users-form').submit(function (event) {
-        event.preventDefault();
-        var formData = new FormData();
-        var id = $("#users-id").val();
-        var name = $("#users-name").val();
-        var email = $("#users-email").val();
-        var level = $("#users-level").val();
-        var photo = $('#users-photo')[0].files[0];
-        var token = $("meta[name='csrf-token']").attr("content");
-        formData.append("id", id);
-        formData.append("user_level_id", level);
-        formData.append("email", email);
-        formData.append("photo", photo);
-        formData.append("_token", token);
-        module.loading_start();
-        $.ajax({
-            url: `${module.baseurl()}/master-users/post-data`,
-            type: "POST",
-            contentType: false,
-            processData: false,
-            cache: false,
-            data: formData,
-            success: function (response, status, xhr) {
-                module.loading_stop();
-                console.log(response);
-                // if (response.status == true) {
-                //     module.send_notif({
-                //         icon: 'success',
-                //         message: response.message
-                //     });
-                //     setTimeout(() => {
-                //         window.location.href = `${module.baseurl()}/dashboard`;
-                //     }, 3100);
-                // } else {
-                //     module.send_notif({
-                //         icon: 'error',
-                //         message: response.message
-                //     });
-                // }
-            },
-            error: function (xhr, status, error) {
-                if (xhr.status == 422) {
-                    module.send_notif({
-                        icon: 'error',
-                        message: xhr.responseJSON.errors.photo[0]
-                    });
-                } else {
-                    module.send_notif({
-                        icon: 'error',
-                        message: xhr.responseJSON.message
-                    });
+    const resetForm = () => {
+        $('#form-user').trigger('reset');
+    }
+
+    let touchtime = 0;
+    $('#user_table tbody').on('click', 'tr', function () {
+        if (touchtime == 0) {
+            touchtime = new Date().getTime();
+        } else {
+            if (((new Date().getTime()) - touchtime) < 800) {
+                let data = dt.row( this ).data();
+                if (data != undefined) {
+
+                    $('#nik').val(data.nik);
+                    $('#name').val(data.name);
                 }
-                module.loading_stop();
+                touchtime = 0;
+            } else {
+                touchtime = new Date().getTime();
             }
-        });
-        return false;
+        }
+    });
+
+    $('#form-user').submit(function (event) {
+        event.preventDefault();
+        let nik = $('#nik').val(),
+            url = module.base_url + 'user/' + nik + '/reset_password',
+            method = 'PUT',
+            data = {
+                nik: nik,
+                password: $('#password').val()
+            }
+        module.loading_start()
+        if (data.password != $('#password2').val()) {
+            module.loading_stop()
+            module.send_notif({
+                icon: 'error',
+                message: 'Password tidak sama'
+            })
+        }else{
+            module.callAjax(url, method, data).then(response => {
+                module.loading_stop();
+                resetForm();
+                dt.ajax.reload();
+                module.send_notif({
+                    icon: 'success',
+                    message: response.message
+                });
+            });
+        }
+    });
+
+    $('#cancel').click(function() {
+        resetForm()
     });
 });
