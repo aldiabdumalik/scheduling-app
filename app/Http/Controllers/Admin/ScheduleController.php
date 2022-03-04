@@ -11,4 +11,19 @@ class ScheduleController extends Controller
     {
         
     }
+
+    public function dtPicket(Request $request)
+    {
+        
+    }
+
+    public function update($id, Request $request)
+    {
+
+    }
+
+    public function createPicket(Request $request)
+    {
+        
+    }
 }

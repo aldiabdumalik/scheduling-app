@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\EventController;
 use App\Http\Controllers\Admin\ScheduleController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\LoginController;
@@ -24,8 +25,8 @@ Route::get('/', function () {
 
 Route::controller(LoginController::class)->group(function () {
     Route::get('login', 'index')->name('login');;
-    Route::post('auth', 'auth');
-    Route::get('logout', '')->name('logout');
+    Route::post('auth', 'auth')->name('auth');
+    Route::get('logout', 'logout')->name('logout');
 });
 
 Route::controller(DashboardController::class)->group(function () {
@@ -47,5 +48,18 @@ Route::controller(UserController::class)->group(function () {
 });
 
 Route::controller(ScheduleController::class)->group(function () {
-    Route::get('schedule', 'index')->name('admin.schedule');
+    Route::get('picket', 'index')->name('admin.picket');
+    Route::post('picket/datatable', 'dtPicket')->name('admin.picket.dt');
+    Route::put('picket/{id}/update', 'update')->name('admin.picket.update');
+    Route::post('picket/generate', 'createPicket')->name('admin.picket.generate');
+});
+
+Route::controller(EventController::class)->group(function () {
+    Route::get('event', 'index')->name('admin.event');
+    Route::post('event/datatable', 'dtEvent')->name('admin.event.dt');
+    Route::get('event/{id}/detail', 'detail')->name('admin.event.detail');
+    Route::post('event/save', 'store')->name('admin.event.store');
+    Route::put('event/{id}/update', 'update')->name('admin.event.update');
+    Route::delete('event/delete', 'destroy')->name('admin.event.destroy');
+    Route::post('event/generate', 'createEvent')->name('admin.event.generate');
 });
