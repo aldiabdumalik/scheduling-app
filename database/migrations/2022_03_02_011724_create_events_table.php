@@ -20,7 +20,7 @@ class CreateEventsTable extends Migration
             $table->date('event_end');
             $table->string('event_color', 50)->default('#FF6363');
             $table->string('event_catagory', 50);
-            $table->tinyInteger('from_api', 1)->unsigned()->default(1);
+            $table->tinyInteger('from_api')->unsigned()->nullable();
             $table->timestamps();
         });
     }
