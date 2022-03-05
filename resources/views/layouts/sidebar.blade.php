@@ -21,7 +21,9 @@
                     {{auth()->user()->load('employee')->employee->name}}
                 </a>
             </h5>
-            <p class="text-muted"></p>
+            <p class="text-muted">
+                {{auth()->user()->load('employee')->employee->nik}}
+            </p>
         </div>
         <!--- Sidemenu -->
         <div id="sidebar-menu">

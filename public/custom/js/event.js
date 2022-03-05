@@ -38,7 +38,7 @@ $(document).ready(function () {
         $('#submit').text('Create Event')
         $('#color').removeAttr('style')
         $('#id').val(0)
-        module.isHidden('#delete', false)
+        module.isHidden('#delete', true)
         $('#form-event select, button[type="submit"], input[name=date]').prop('disabled', false);
         $('#form-event input').not('input[type=hidden]').prop('readonly', false);
     }
