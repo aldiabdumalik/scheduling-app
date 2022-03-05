@@ -26,7 +26,8 @@
             <select name="type" id="type" class="form-control" required>
                 <option value="">Select type</option>
                 <option value="Libur">Libur</option>
-                <option value="Ganti Hari">Ganti Hari</option>
+                <option value="Ganti Hari 1">Ganti Hari Shift 1</option>
+                <option value="Ganti Hari 2">Ganti Hari Shift 2</option>
                 <option value="Stock Opname">Stock Opname</option>
             </select>
         </div>

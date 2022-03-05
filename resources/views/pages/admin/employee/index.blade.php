@@ -2,6 +2,26 @@
 @section('title', 'Employee')
 @section('content')
     <div class="row">
+        <div class="col-12 col-md-8">
+            <div class="card-box">
+                <p class="text-center" style="font-size:12px;"><i>Double click on raw to Update data</i></p>
+                <div class="table-rep-plugin">
+                    <div class="table-responsive" data-pattern="priority-columns">
+                        <table id="employee_table" class="table table-striped dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%; cursor: pointer">
+                            <thead>
+                                <tr>
+                                    <th>No.</th>
+                                    <th>NIK</th>
+                                    <th>Name</th>
+                                    <th>Whatsapp</th>
+                                    <th>Color</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="col-12 col-md-4">
             <div class="card-box">
                 <div class="clearfix">
@@ -42,26 +62,6 @@
                         </div>
                     </div>
                 </form>
-            </div>
-        </div>
-        <div class="col-12 col-md-8">
-            <div class="card-box">
-                <p class="text-center" style="font-size:12px;"><i>Double click on raw to Update data</i></p>
-                <div class="table-rep-plugin">
-                    <div class="table-responsive" data-pattern="priority-columns">
-                        <table id="employee_table" class="table table-striped dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%; cursor: pointer">
-                            <thead>
-                                <tr>
-                                    <th>No.</th>
-                                    <th>NIK</th>
-                                    <th>Name</th>
-                                    <th>Whatsapp</th>
-                                    <th>Color</th>
-                                </tr>
-                            </thead>
-                        </table>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
