@@ -56,6 +56,9 @@ class ColorSeeder extends Seeder
             [
                 'code' => '#C6D57E'
             ],
+            [
+                'code' => '#B33030'
+            ]
         ];
         for ($i=0; $i < count($colors); $i++) { 
             Color::create($colors[$i]);

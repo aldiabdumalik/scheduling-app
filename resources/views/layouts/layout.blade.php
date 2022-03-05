@@ -8,14 +8,15 @@
     <title>@yield('title')</title>
     <!-- App favicon -->
     <link rel="shortcut icon" href="{{asset('templates/assets/images/favicon.ico')}}">
-    {{-- Other css --}}
+    {{-- Other css --}} 
     <link href="{{asset('templates/plugins/spinkit/spinkit.css')}}" rel="stylesheet" />
-    <link href="{{asset('templates/plugins/dropify/css/dropify.min.css')}}" rel="stylesheet" type="text/css" />
+    {{-- <link href="{{asset('templates/plugins/dropify/css/dropify.min.css')}}" rel="stylesheet" type="text/css" /> --}}
     <link href="{{asset('templates/plugins/jquery-toastr/jquery.toast.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('templates/plugins/sweet-alert/sweetalert2.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('templates/plugins/jquery-loading/jquery.loading.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('templates/plugins/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('templates/plugins/datatables/responsive.bootstrap4.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('templates/plugins/bootstrap-daterangepicker/daterangepicker.css')}}" rel="stylesheet">
     <!-- App css -->
     <link href="{{asset('templates/assets/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('templates/assets/css/icons.css')}}" rel="stylesheet" type="text/css" />
@@ -33,7 +34,7 @@
     <script src="{{asset('templates/assets/js/waves.js')}}"></script>
     <script src="{{asset('templates/assets/js/jquery.slimscroll.js')}}"></script>
     {{-- Other js --}}
-    <script src="{{asset('templates/plugins/dropify/js/dropify.min.js')}}"></script>
+    {{-- <script src="{{asset('templates/plugins/dropify/js/dropify.min.js')}}"></script> --}}
     <script src="{{asset('templates/plugins/jquery-toastr/jquery.toast.min.js')}}"></script>
     <script src="{{asset('templates/plugins/sweet-alert/sweetalert2.min.js')}}"></script>
     <script src="{{asset('templates/plugins/jquery-loading/jquery.loading.min.js')}}"></script>
@@ -41,6 +42,8 @@
     <script src="{{asset('templates/plugins/datatables/dataTables.bootstrap4.min.js')}}"></script>
     <script src="{{asset('templates/plugins/datatables/dataTables.responsive.min.js')}}"></script>
     <script src="{{asset('templates/plugins/datatables/responsive.bootstrap4.min.js')}}"></script>
+    <script src="{{asset('templates/plugins/moment/moment.js')}}"></script>
+    <script src="{{asset('templates/plugins/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
     <!-- App js -->
     <script src="{{asset('templates/assets/js/jquery.core.js')}}"></script>
     <script src="{{asset('templates/assets/js/jquery.app.js')}}"></script>

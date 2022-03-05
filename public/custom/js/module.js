@@ -32,8 +32,9 @@ export function send_notif(params) {
 }
 export function loading_start() {
     $('body').loading({
-        theme: 'dark'
-    });
+        theme: 'dark',
+        // zIndex: 9999
+    }).css('z-index', 999);
 }
 export function loading_stop() {
     $('body').loading('stop');
@@ -41,6 +42,16 @@ export function loading_stop() {
 
 export function isHidden(element, value=true) {
     return (value == true) ? $(element).addClass('d-none') : $(element).removeClass('d-none')
+}
+
+export function isDisabled(element, value=true) {
+    return $(element).prop('disabled', value);
+}
+
+export function htmlDecode(input){
+    let e = document.createElement('div');
+    e.innerHTML = input;
+    return e.childNodes[0].nodeValue;
 }
 
 export function callAjax(url, method, data=null) {

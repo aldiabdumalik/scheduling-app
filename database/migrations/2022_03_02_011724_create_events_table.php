@@ -17,7 +17,7 @@ class CreateEventsTable extends Migration
             $table->id();
             $table->string('event_name', 100);
             $table->date('event_start');
-            $table->date('event_end');
+            $table->date('event_end')->nullable();
             $table->string('event_color', 50)->default('#FF6363');
             $table->string('event_category', 50);
             $table->tinyInteger('from_api')->unsigned()->nullable();

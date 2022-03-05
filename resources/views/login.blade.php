@@ -11,7 +11,7 @@
     <div class="form-group m-b-20 row">
         <div class="col-12">
             <label for="login-id">NIK</label>
-            <input type="number" name="login-id" class="form-control" id="login-id" required="" autocomplete="off" placeholder="Masukan NIK Anda">
+            <input type="text" name="login-id" class="form-control" id="login-id" required="" autocomplete="off" placeholder="Masukan NIK Anda">
         </div>
     </div>
 
