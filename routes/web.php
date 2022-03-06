@@ -50,9 +50,9 @@ Route::middleware(['auth'])->group(function () {
     
     Route::controller(ScheduleController::class)->group(function () {
         Route::get('picket', 'index')->name('admin.picket');
-        Route::post('picket/datatable', 'dtPicket')->name('admin.picket.dt');
-        Route::put('picket/{id}/update', 'update')->name('admin.picket.update');
-        Route::post('picket/generate', 'createPicket')->name('admin.picket.generate');
+        // Route::post('picket/datatable', 'dtPicket')->name('admin.picket.dt');
+        // Route::put('picket/{id}/update', 'update')->name('admin.picket.update');
+        Route::get('picket/generate', 'createPicket')->name('admin.picket.generate');
     });
     
     Route::controller(EventController::class)->group(function () {
