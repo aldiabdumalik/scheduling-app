@@ -27,6 +27,10 @@
                         <i class="fi-head"></i> <span>My Account</span>
                     </a>
 
+                    <a href="{{route('logout')}}" class="dropdown-item notify-item">
+                        <i class="fi-power"></i> <span>Sleep</span>
+                    </a>
+
                     <!-- item-->
                     <a href="{{route('logout')}}" class="dropdown-item notify-item">
                         <i class="fi-power"></i> <span>Logout</span>
@@ -46,12 +50,7 @@
             <li>
                 <div class="page-title-box">
                     <h4 class="page-title">@yield('title')</h4>
-                    <ol class="breadcrumb">
-                        {{-- {{print_r($breadcrumb)}} --}}
-                        {{-- @foreach ($breadcrumb as $ol)
-                        <li class="breadcrumb-item"><a href="{{route($ol['menu']['url'])}}">{{$ol['menu']['nama']}}</a></li>
-                        @endforeach --}}
-                    </ol>
+                    {{ Breadcrumbs::render() }}
                 </div>
             </li>
 

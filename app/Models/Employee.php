@@ -22,4 +22,9 @@ class Employee extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function picket()
+    {
+        return $this->hasOne(Picket::class, 'employee_id', 'id');
+    }
 }

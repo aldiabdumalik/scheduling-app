@@ -21,7 +21,9 @@
                     {{auth()->user()->load('employee')->employee->name}}
                 </a>
             </h5>
-            <p class="text-muted"></p>
+            <p class="text-muted">
+                {{auth()->user()->load('employee')->employee->nik}}
+            </p>
         </div>
         <!--- Sidemenu -->
         <div id="sidebar-menu">
@@ -35,10 +37,10 @@
                 </li>
 
                 <li>
-                    <a href="javascript: void(0);"><i class="fi-folder"></i> <span> Schedule </span> <span class="menu-arrow"></span></a>
+                    <a href="javascript: void(0);"><i class="fi-grid-2"></i> <span> Schedule </span> <span class="menu-arrow"></span></a>
                     <ul class="nav-second-level" aria-expanded="false">
-                        <li><a href="{{route('admin.schedule')}}">Event</a></li>
-                        <li><a href="{{route('admin.schedule')}}">Picket</a></li>
+                        <li><a href="{{route('admin.event')}}">Event</a></li>
+                        <li><a href="{{route('admin.picket')}}">Picket</a></li>
                     </ul>
                 </li>
 
@@ -51,9 +53,11 @@
                 </li>
 
                 <li>
-                    <a href="{{route('logout')}}">
-                        <i class="fi-cog"></i> <span> Quote </span>
-                    </a>
+                    <a href="javascript: void(0);"><i class="fi-cog"></i> <span> Master </span> <span class="menu-arrow"></span></a>
+                    <ul class="nav-second-level" aria-expanded="false">
+                        <li><a href="{{route('logout')}}">Color</a></li>
+                        <li><a href="{{route('logout')}}">Quote</a></li>
+                    </ul>
                 </li>
 
             </ul>
